@@ -7,7 +7,7 @@
 2. Создать виртуальную среду:
     ```bash
     python -m venv testTaskEnv
-    testTaskEnv/Scripts/activate 
+    testTaskEnv\Scripts\activate.bat 
     ```
 
 3. Установить зависимости:
