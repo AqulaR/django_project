@@ -13,15 +13,17 @@ def project_tasks(request, project_id):
     prComments = PrComments.objects.filter(project_id=project_id)
     
     if request.method == 'POST':
+        print(request.POST)
         if 'add_comment' in request.POST:
             form = CommentForm(request.POST)
             if form.is_valid():
-                task_id = form.cleaned_data['element_id']
+                task_id = form.cleaned_data['task_id']
                 task = get_object_or_404(Task, id=task_id)
                 comment = form.save(commit=False)
                 comment.task = task
                 comment.save()
                 return redirect('project_tasks', project_id=project_id)
+            
         elif 'add_Pr_com' in request.POST:
             form = PrCommentForm(request.POST)
             if form.is_valid():
@@ -36,4 +38,5 @@ def project_tasks(request, project_id):
                                                   'project': project,
                                                   'comments': comments,
                                                   'prComments': prComments,
-                                                  'form': form})
+                                                  'form_tsk': CommentForm,
+                                                  'form_prj': PrCommentForm,})

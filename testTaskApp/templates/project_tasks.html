@@ -21,7 +21,7 @@
                 <h3>Коментарии</h3>
                 <form method="post" action="{% url 'project_tasks' project.id %}" class="form_comments">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {{ form_tsk.as_p }}
                     <input type="hidden" name="task_id" value="{{ task.id }}">
                     <button type="submit" name="add_comment">Добавить</button>
                 </form>
@@ -38,7 +38,7 @@
     <h3>Коментарии</h3>
     <form method="post" action="{% url 'project_tasks' project.id %}" class="form_comments">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form_prj.as_p }}
         <button type="submit" name="add_Pr_com">Добавить</button>
     </form>
     {% for prComment in prComments|dictsortreversed:"date" %}
