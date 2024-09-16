@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task List</title>
+    {% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static './style.css' %}">
+</head>
+<body class="tasks">
+    <a href="{% url 'index' %}">Назад</a>
+    <h1>{{ project }} > Задачи</h1>
+    <div class="accordions">
+    {% for task, comments in comments %}
+        <div class="accordion">
+            <input id="{{ task.id }}" type="radio" class="accordion-toggle" name="toggle" />
+            <label for="{{ task.id }}">{{ task.title }}</label>
+            <section>
+                <p>Срок: {{ task.due_date }}</p>
+                <p>Статус: {{ task.get_status_display }}</p>
+                <h3>Описание:</h3>
+                <p>{{ task.description }}</p>
+                <h3>Коментарии</h3>
+                <form method="post" action="{% url 'project_tasks' project.id %}" class="form_comments">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="hidden" name="task_id" value="{{ task.id }}">
+                    <button type="submit" name="add_comment">Добавить</button>
+                </form>
+                {% for comment in comments|dictsortreversed:"date" %}
+                    <p>
+                    {{ comment.text }} - {{ comment.date }}
+                    </p>
+                {% endfor %}
+    
+            </section>
+        </div>
+    {% endfor %}
+    </div>
+    <h3>Коментарии</h3>
+    <form method="post" action="{% url 'project_tasks' project.id %}" class="form_comments">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="add_Pr_com">Добавить</button>
+    </form>
+    {% for prComment in prComments|dictsortreversed:"date" %}
+        <p>
+        {{ prComment.text }} - {{ prComment.date }}
+        </p>
+    {% endfor %}
+</body>
+</html>

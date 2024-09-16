@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Django App</title>
+</head>
+<body>
+    {% for project in projects %}
+        <li>
+            <a href="{% url 'project_tasks' project.id %}">{{ project.title }}</a> - {{ project.get_status_display }}
+        </li>
+    {% endfor %}
+</body>
+</html>
